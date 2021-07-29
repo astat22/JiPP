@@ -1,0 +1,24 @@
+#dlugosc listy
+let rec listLength(l) =
+if l=[] then 0
+else 1+listLength(List.tl(l));;
+
+
+
+#nty element listy
+let rec nth(lista,n,nn)=
+if nn-n= listLength(List.tl(lista)) then List.hd(lista)
+else nth( List.tl(lista), n, nn);;
+
+let nth2 lista n=
+nth(lista,n,listLength(lista));;
+
+
+#insertion sort
+let rec insSort lista = 
+match lista with
+[]->[] | head::tail -> insert head (insSort tail)
+and insert elt lista=
+match lista with []->[elt]
+|head::tail -> if elt <= head then elt::lista else head :: insert elt tail;;
+

@@ -1,0 +1,90 @@
+#program ma wygenerowac wszystkie pary z listy
+
+let rec pair2 lista =
+if List.tl(lista)= 0 then ::[]
+else ::(List.hd(lista) , List.hd(List.tl(lista))::pair List.tl(lista);;
+
+let rec pair lista = 
+if List.tl(lista) != [] then List.append(pair, [pair2(lista)]) ;;
+
+let rec pair3 lista = 
+if List.tl(lista) != [] then (List.hd(lista),List.hd(List.tl(lista))
+
+let rec pair4 head tail lista = 
+if tail != [] then List.append(lista,(head, List.hd(tail)));;
+
+let rec pair 5 lista
+match lista with
+[]->[] | head::tail -> 
+
+
+let rec pair6 lista = 
+if List.tl(lista) != [] then let x = zip(List.hd(lista)::[] , List.tl(lista)) in [x;pair6 List.tl(lista)]  ;;
+
+
+
+
+
+let rec nth(lista,n,nn)=
+if nn-n= listLength(List.tl(lista)) then List.hd(lista)
+else nth( List.tl(lista), n, nn);;
+
+let nth2 lista n=
+nth(lista,n,listLength(lista));;
+
+let rec listLength l =
+if l=[] then 0
+else 1+listLength(List.tl l );;
+
+let rec reszta head n =
+if n>0 then head:: reszta head (n-1)
+else [];;
+
+let rec pair lista = 
+if List.tl(lista) != [] then let z = nth2 lista 1 in (let y = reszta z (listLength(lista)-1) 
+ in (let t = List.tl(lista) in (let x = List.combine  y t in let u = pair t in List.append x u ) ) );;
+
+let rec pair lista =
+match lista with
+[]->[]
+| h::t ->  ( List.combine ( reszta h (List.length t ) ) t) @ pair t;; 
+
+
+let rec allsets a lista = 
+match lista with
+[]->[]
+| h::t -> a :: [h] :: (allsets (a@[h]) t) ;;
+
+allsets [] [1;2;3];;
+
+
+let rec allsets lista = 
+match lista with
+[]-> [[]]
+| h::t -> let x = allsets t in [h]:: (List.append [h]  x);;
+
+allsets [1;2;3];;
+
+
+
+type formula = False
+| True
+| Atom of string
+| Not of formula
+| And of formula*formula
+| Or of formula*formula 
+| Imp of formula*formula;;
+
+let rec eval env exp =
+match exp with 
+ True -> true
+| False -> false
+| Atom a -> List.assoc a env
+| Not a ->   not (eval env a)
+| And(a,b) -> eval env a  && eval env b
+| Or(a,b) -> eval env a || eval env b
+| Imp(a,b) ->eval env a && not (eval env b);; 
+
+let e = Or(And(True, Atom "x"), Atom "y");;
+eval [("x",true);("y",false)] e;;
+

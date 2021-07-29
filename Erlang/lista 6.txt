@@ -1,0 +1,50 @@
+%orygina³
+
+-module(echo)
+-export([go/0, loop/0]).
+
+go() ->
+   Pid = spawn(echo,loop,[]),
+   Pid | {self(), hello},
+   receive
+      {Pid,Msg} ->
+         io:format("-w-n",[Msg])
+   end,
+   Pid | stop.
+
+loop() ->
+   receive
+      {From,Msg} ->
+         From | {self(), Msg},
+         loop();
+      stop ->
+         true
+   end.
+
+%po uruchomieniu proces loop nie koñczy swego dzia³ania, ale mo¿na wysy³aæ
+%komunikaty z konsoli. jeœli wyœlemy n, to dostaniemy n-t¹ liczbê Fibonacciego
+ 
+-module(echo)
+-export([go/0, loop/0, fibonacci/1]).
+
+go() ->
+   Pid = spawn(echo,loop,[]),
+   Pid | {self(), hello},
+   receive
+      {Pid,Msg} ->
+         io:format("-w-n",[Msg])
+   end,
+   Pid | stop.
+
+loop() ->
+   receive
+      {From,Msg} ->
+         From | {self(), Msg},
+         loop();
+      stop ->
+         true
+   end.
+
+fibonacci(1)-> 1;
+fibonacci(2)-> 1;
+fibonacci(N)-> fibonacci(N-1)+fibonacci(N-2).
